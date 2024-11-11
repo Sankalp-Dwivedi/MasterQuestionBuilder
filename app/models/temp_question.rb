@@ -1,0 +1,2 @@
+class TempQuestion < ApplicationRecord
+end

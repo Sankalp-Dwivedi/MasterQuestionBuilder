@@ -1,0 +1,212 @@
+<% if false %>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    font-size: 2.5em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .question-block {
+    margin-bottom: 40px;
+  }
+  .question {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  .options {
+    list-style: none;
+    padding: 0;
+  }
+  .options li {
+    background-color: #f4f4f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: 1px solid #ccc;
+  }
+  .options li:hover {
+    background-color: #e2e6ea;
+  }
+  .correct-answer {
+    background-color: #28a745;
+    color: white;
+  }
+  .btn-back {
+    display: block;
+    margin: 30px auto;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  .btn-back:hover {
+    background-color: #0056b3;
+  }
+</style>
+<div class="container">
+  <h1>Generated Questions</h1>
+
+  <% @questions.each_with_index do |q, index| %>
+    <div class="question-block">
+      <p class="question"><%= (index + 1).to_s + ". " + q['question'] %></p>
+      <ul class="options">
+        <% q['options'].each do |option| %>
+          <li class="<%= 'correct-answer' if option == q['correct'] %>"><%= option %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <a href="<%= new_question_path %>" class="btn-back">Generate Another Set</a>
+  <%= form_with url: save_questions_path, method: :post, local: true do %>
+    <input type="hidden" name="question" value="<%= @questions.to_json %>">
+    <button type="submit" class="btn-success">Save Questions and Options to Database</button>
+  <% end %>
+  <a href="<%= new_question_path %>" class="btn-back">Save Questions and Options to Database</a>
+  <%#= button_to 'Save Questions and Options to Database', save_questions_path, method: :post, class: 'btn-success' %>
+
+</div>
+<% end %>
+
+
+<%# =================== %>
+<%# =================== %>
+<%# =================== %>
+<%# =================== %>
+<%# =================== %>
+
+
+
+
+
+
+
+
+<style>
+  /* existing styles */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    font-size: 2.5em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .question-block {
+    margin-bottom: 40px;
+  }
+  .question {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  .options {
+    list-style: none;
+    padding: 0;
+  }
+  .options li {
+    background-color: #f4f4f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: 1px solid #ccc;
+  }
+  .options li:hover {
+    background-color: #e2e6ea;
+  }
+  .correct-answer {
+    background-color: #28a745 !important;
+    color: white;
+  }
+  .incorrect-answer {
+    background-color: #dc3545 !important;
+    color: white;
+  }
+  .btn-back {
+    display: block;
+    margin: 30px auto;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  .btn-back:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="container">
+  <h1>Generated Questions</h1>
+
+  <% @questions.each_with_index do |q, index| %>
+    <div class="question-block">
+      <p class="question"><%= (index + 1).to_s + ". " + q['question'] %></p>
+      <ul class="options" data-correct-answer="<%= q['correct_answer'] %>">
+        <% q['options'].each do |option| %>
+          <li onclick="checkAnswer(this, '<%= q['correct_answer'] %>')"><%= option %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <a href="<%= new_question_path %>" class="btn-back">Generate Another Set</a>
+  <%= form_with url: save_questions_path, method: :post, local: true do %>
+    <input type="hidden" name="temp_id" value="<%= params[:temp_id] %>">
+    <button type="submit" class="btn-back">Save Questions and Options to Database</button>
+  <% end %>
+</div>
+
+<script>
+  function checkAnswer(selectedOption, correctAnswer) {
+    // Remove any previous answer indication classes
+    const optionsList = selectedOption.parentNode;
+    const options = optionsList.querySelectorAll('li');
+    options.forEach(option => option.classList.remove('correct-answer', 'incorrect-answer'));
+
+    // Add the appropriate class based on the selected answer
+    if (selectedOption.innerText === correctAnswer) {
+      selectedOption.classList.add('correct-answer');
+    } else {
+      selectedOption.classList.add('incorrect-answer');
+    }
+  }
+</script>

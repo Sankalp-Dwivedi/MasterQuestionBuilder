@@ -1,0 +1,63 @@
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    font-size: 2.2em;
+    color: #333;
+    text-align: center;
+  }
+  p {
+    font-size: 1.1em;
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  .btn-success:hover {
+    background-color: #218838;
+  }
+</style>
+<div class="container">
+  <h1>Input Paragraph</h1>
+  <p>Please input a paragraph and we will generate conceptual questions based on it.</p>
+  
+  <%#= form_with url: create_question_path, method: :post, local: true do %>
+  <%= form_with url: create_question_path, method: :post, local: true do %>
+    <textarea name="paragraph" rows="8" placeholder="Type or paste your paragraph here..."></textarea>
+    <button type="submit" class="btn-success" data-disable-with="Generating....">Generate Questions</button>
+  <% end %>
+</div>
