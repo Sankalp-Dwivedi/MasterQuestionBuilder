@@ -59,6 +59,6 @@ end
 gem 'subprocess'
 gem 'httparty'
 gem 'byebug'
-gem 'rails_admin', '~> 3.0', github: "railsadminteam/rails_admin", branch: "master"
+gem 'rails_admin', '~> 3.2', github: "railsadminteam/rails_admin", branch: "master"
 gem "cssbundling-rails"
 gem 'sassc', '~> 2.4'
